@@ -1,0 +1,685 @@
+/* ==========================================================================
+   RESETEO GENERAL Y TEMAS (Variables)
+   ========================================================================== */
+:root {
+    --bg-body: #dadbd4;
+    --bg-auth: #00a884;
+    --bg-container: #f0f2f5;
+    --bg-sidebar: #ffffff;
+    --bg-header: #f0f2f5;
+    --border-color: #e9edef;
+    --text-primary: #111b21;
+    --text-secondary: #667781;
+    --bg-input: #f0f2f5;
+    --chat-bg: #efeae2;
+    --msg-incoming: #ffffff;
+    --msg-outgoing: #d9fdd3;
+    --msg-shadow: rgba(11,20,26,.13);
+    --color-accent: #00a884; /* Verde corporativo en Modo Claro */
+}
+
+/* Variables para Modo Oscuro - ¡Personalizado en Dorado! 🌟 */
+[data-theme="dark"] {
+    --bg-body: #0b141a;
+    --bg-container: #111b21;
+    --bg-sidebar: #111b21;
+    --bg-header: #202c33;
+    --border-color: #222e35;
+    --text-primary: #e9edef;
+    --text-secondary: #8696a0;
+    --bg-input: #202c33;
+    --chat-bg: #0b141a;
+    --msg-incoming: #202c33;
+    --msg-outgoing: #342a14; /* Fondo sutil bronce/dorado oscuro para mensajes enviados */
+    --msg-shadow: rgba(0, 0, 0, 0.3);
+    --color-accent: #d4af37; /* Dorado Premium para Modo Oscuro */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-body);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+}
+
+/* ==========================================================================
+   PANTALLA DE AUTENTICACIÓN (LOGIN / REGISTRO)
+   ========================================================================== */
+.auth-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--bg-auth);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.auth-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    width: 400px;
+    text-align: center;
+}
+
+.auth-logo {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.auth-card h2 {
+    color: #111b21;
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.auth-card p {
+    color: #667781;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 16px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 13px;
+    color: #00a884;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e9edef;
+    border-radius: 6px;
+    outline: none;
+    font-size: 15px;
+    background-color: #f8f9fa;
+}
+
+.input-group input:focus {
+    border-color: #00a884;
+    background-color: #fff;
+}
+
+.auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#btn-login {
+    background-color: #00a884;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#btn-login:hover {
+    background-color: #008f72;
+}
+
+#btn-toggle-registro {
+    background: none;
+    border: none;
+    color: #54656f;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   CONTENEDOR PRINCIPAL CLON WHATSAPP WEB
+   ========================================================================== */
+.whatsapp-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--bg-container);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: filter 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+/* ==========================================================================
+   COLUMNA IZQUIERDA: SIDEBAR DE CHATS
+   ========================================================================== */
+.sidebar-chats {
+    width: 350px;
+    min-width: 300px;
+    background-color: var(--bg-sidebar);
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+}
+
+/* Cabecera del perfil */
+.header-perfil {
+    height: 60px;
+    background-color: var(--bg-header);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-perfil div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    font-size: 20px;
+    background: #dfe5e7;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Botones de acción del Perfil (Tema y Salir) */
+.perfil-acciones {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.perfil-acciones button, .header-der button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    color: var(--text-secondary);
+}
+
+.perfil-acciones button:hover, .header-der button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .perfil-acciones button:hover, 
+[data-theme="dark"] .header-der button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Corrección de diseño y animaciones específicas para el botón Cerrar Sesión */
+#btn-logout {
+    border-radius: 8px !important; 
+    padding: 6px 12px !important; 
+    font-size: 13.5px !important;
+    font-weight: 500;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+#btn-logout:hover {
+    background-color: rgba(239, 68, 68, 0.1) !important; 
+    color: #ef4444 !important; 
+}
+
+[data-theme="dark"] #btn-logout:hover {
+    background-color: rgba(212, 175, 55, 0.1) !important; 
+    color: var(--color-accent) !important; 
+}
+
+#btn-logout:active {
+    transform: scale(0.96);
+}
+
+/* Buscador de historial */
+.search-chats-box {
+    padding: 8px 14px;
+    background-color: var(--bg-sidebar);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.search-chats-box input {
+    width: 100%;
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+}
+
+/* Lista de conversaciones / Salas */
+.lista-conversaciones {
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: var(--bg-sidebar);
+}
+
+.chat-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 15px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+    transition: background 0.2s;
+}
+
+.chat-item:hover {
+    background-color: var(--bg-input);
+}
+
+.chat-item.activo {
+    background-color: var(--bg-input);
+    border-left: 4px solid var(--color-accent); 
+}
+
+.chat-icon {
+    width: 45px;
+    height: 45px;
+    background-color: var(--color-accent); 
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    flex-shrink: 0;
+    transition: background-color 0.3s ease;
+}
+
+.chat-info {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.chat-info h3 {
+    font-size: 16px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.chat-info p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ==========================================================================
+   COLUMNA DERECHA: VENTANA DE CHAT ACTIVO
+   ========================================================================== */
+.chat-window {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--chat-bg);
+    position: relative;
+}
+
+/* Cabecera del Chat Activo */
+.chat-window-header {
+    height: 60px;
+    background-color: var(--bg-header);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 1px solid var(--border-color);
+    z-index: 10;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.chat-window-header .chat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+}
+
+.header-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.header-info h3 {
+    font-size: 16px;
+    color: var(--text-primary);
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.header-info span {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+#btn-google-nav {
+    background-color: var(--color-accent) !important; 
+    color: white !important;
+    border-radius: 20px !important;
+    padding: 6px 16px !important;
+    font-size: 14px !important;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+/* Contenedor de los Mensajes con el Tapiz */
+#chat-container {
+    flex-grow: 1;
+    background-color: var(--chat-bg);
+    background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+    padding: 20px 5%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+    position: relative;
+}
+
+/* Filtro sutil del tapiz en modo oscuro para que no encandile */
+[data-theme="dark"] #chat-container {
+    background-blend-mode: overlay;
+    background-color: rgba(11, 20, 26, 0.92);
+}
+
+/* Globos de Mensajes */
+.mensaje {
+    background-color: var(--msg-incoming);
+    color: var(--text-primary);
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    max-width: 65%;
+    align-self: flex-start;
+    box-shadow: 0 1px 0.5px var(--msg-shadow);
+    position: relative;
+}
+
+.mensaje.propio {
+    background-color: var(--msg-outgoing);
+    align-self: flex-end;
+}
+
+/* Ajuste de color del texto enviado en modo oscuro */
+[data-theme="dark"] .mensaje.propio {
+    color: #e9edef;
+}
+
+.mensaje.sistema {
+    background-color: var(--bg-header);
+    color: var(--text-secondary);
+    align-self: center;
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    margin: 10px 0;
+}
+
+.autor {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #e54287;
+    margin-bottom: 2px;
+}
+
+.mensaje.propio .autor {
+    color: var(--color-accent); 
+}
+
+.texto-msg {
+    font-size: 14.2px;
+    line-height: 19px;
+    word-break: break-word;
+}
+
+.hora {
+    display: block;
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-align: right;
+    margin-top: 4px;
+}
+
+/* Componentes de archivos */
+.chat-img img {
+    border-radius: 6px;
+    margin-top: 4px;
+}
+
+.chat-file a {
+    color: #0275d8;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 4px;
+}
+
+[data-theme="dark"] .chat-file a {
+    color: var(--color-accent); 
+}
+
+/* ==========================================================================
+   PANEL NAVEGADOR RAPIDO INTEGRADO
+   ========================================================================== */
+#google-search-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70%;
+    background-color: var(--bg-sidebar);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 2px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.google-panel-header {
+    background-color: var(--bg-header);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#btn-cerrar-google {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#iframe-google {
+    width: 100%;
+    flex: 1;
+    border: none;
+    background-color: white;
+}
+
+/* ==========================================================================
+   BARRA INFERIOR DE ENVÍO DE MENSAJES
+   ========================================================================= */
+#form-container {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-header);
+    padding: 10px 16px;
+    gap: 12px;
+    width: 100%;
+    border-left: 1px solid var(--border-color);
+}
+
+#btn-adjuntar, #btn-emoji {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 4px;
+    color: var(--text-secondary);
+    transition: transform 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#btn-adjuntar:active, #btn-emoji:active {
+    transform: scale(0.9);
+}
+
+#input-mensaje {
+    flex: 1;
+    border: none;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    background-color: var(--bg-sidebar);
+    color: var(--text-primary);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+
+#input-mensaje::placeholder {
+    color: var(--text-secondary);
+}
+
+#form-container button[type="submit"] {
+    background-color: var(--color-accent); 
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+#form-container button[type="submit"]:hover {
+    filter: brightness(0.9);
+}
+
+/* ==========================================================================
+   CONTENEDOR FLOTANTE PARA EMOJIS
+   ========================================================================== */
+#emoji-picker-container {
+    position: absolute;
+    bottom: 65px;
+    left: 50px;
+    z-index: 9999;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#emoji-picker-container shadow-root,
+#emoji-picker-container em-emoji-picker,
+.emoji-mart {
+    height: 400px !important;
+    width: 340px !important;
+    border: none !important;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (SOPORTE PARA MÓVILES)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .sidebar-chats {
+        width: 80px;
+        min-width: 80px;
+    }
+    .chat-info, .search-chats-box, .header-perfil span, .perfil-acciones, #btn-google-nav {
+        display: none;
+    }
+    .mensaje {
+        max-width: 85%;
+    }
+}
+
+/* ==========================================================================
+   BOTÓN DE DESPLAZAMIENTO FLOTANTE (IR AL ÚLTIMO MENSAJE)
+   ========================================================================== */
+#btn-bajar-chat {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 8px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s ease, color 0.2s;
+}
+
+#btn-bajar-chat:hover {
+    transform: scale(1.1);
+    color: var(--color-accent);
+}
+
+#btn-bajar-chat:active {
+    transform: scale(0.9);
+}
+
+/* ==========================================================================
+   EFECTO DE DIFUMINADO PREMIUM PARA CIERRE DE SESIÓN
+   ========================================================================== */
+.app-blur-effect {
+    filter: blur(8px) grayscale(20%);
+    pointer-events: none; 
+}
+
+/* Estilos personalizados para las ventanas flotantes SweetAlert2 */
+.swal2-popup {
+    border-radius: 16px !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+}
+
+.swal2-html-container {
+    color: var(--text-secondary) !important;
+}
