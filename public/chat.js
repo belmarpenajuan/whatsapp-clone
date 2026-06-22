@@ -1,18 +1,3 @@
-const firebaseConfig = {
-    apiKey: "AIzaSyD6DpcPWdYbRWsgLHfcpy6kNuYXeL6SZUU",
-    authDomain: "whatsapp-2-53dcf.firebaseapp.com",
-    projectId: "whatsapp-2-53dcf",
-    storageBucket: "whatsapp-2-53dcf.firebasestorage.app",
-    messagingSenderId: "902728389072",
-    appId: "1:902728389072:web:75dff0fd2db5cc463de9d5",
-    measurementId: "G-N6GZFT0M6X"
-};
-
-
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
-
 const socket = io(); 
 
 
@@ -242,24 +227,26 @@ conversacionesWhatsApp.forEach(item => {
         const canalSeleccionado = item.getAttribute('data-canal');
         if (canalSeleccionado === canalActual) return; 
 
-        // CORRECCIÓN: Remover la clase del elemento que la tenga de forma segura
-        const canalActivoAnterior = document.querySelector('.chat-item.activo');
-        if (canalActivoAnterior) canalActivoAnterior.classList.remove('activo');
-        
+        document.querySelector('.chat-item.activo').classList.remove('activo');
         item.classList.add('activo');
+
         canalActual = canalSeleccionado;
-        
-        // Limpiar la pantalla de inmediato para recibir el nuevo canal
-        if (chatMensajes) chatMensajes.innerHTML = '';
         
         if (txtCanalActual) {
             if(canalActual === 'general') txtCanalActual.textContent = "Grupo General";
             if(canalActual === 'archivos') txtCanalActual.textContent = "Repositorio Archivos";
             if(canalActual === '.') txtCanalActual.textContent = "Sala de Pruebas (.)";
         }
+        
+        const headerIcon = document.getElementById("header-group-icon");
+        if(headerIcon) {
+            if(canalActual === 'general') headerIcon.textContent = "👥";
+            if(canalActual === 'archivos') headerIcon.textContent = "📁";
+            if(canalActual === '.') headerIcon.textContent = "💬";
+        }
 
         socket.emit('cambiar_canal', canalActual);
-        cargarHistorial(); // Trae el historial limpio de la nueva sala
+        cargarHistorial();
     });
 });
 
@@ -570,9 +557,10 @@ if (inputBusqueda) {
         const textoBusqueda = e.target.value.toLowerCase().trim(); 
 
         
-        if (chatMensajes) chatMensajes.innerHTML = ''; 
+        const mensajesEnPantalla = document.querySelectorAll('.mensaje'); 
+        mensajesEnPantalla.forEach(msg => msg.remove()); 
 
-        
+        // Si el buscador está vacío, mostramos todo el historial completo
         if (textoBusqueda === '') { 
             if (Array.isArray(historialMensajes)) {
                 historialMensajes.forEach(item => renderizarMensaje(item)); 
@@ -581,7 +569,7 @@ if (inputBusqueda) {
             return;
         }
 
-       
+        // Filtrar el historial 
         const historialFiltrado = historialMensajes.filter(item => { 
             if (item.tipo === 'sistema') { 
                 return item.datos.toLowerCase().includes(textoBusqueda); 

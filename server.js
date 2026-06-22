@@ -108,13 +108,9 @@ io.on('connection', (socket) => {
 app.get('/historial', async(req, res) => { 
     try { 
         const canalSolicitado = req.query.canal || 'general';
-        
-        
         const snapshot = await db.collection('mensajes')
                                    .where('canal', '==', canalSolicitado)
-                                   .orderBy('timestamp', 'asc')
                                    .get(); 
-        
         const historial = []; 
         snapshot.forEach(doc => {
             const data = doc.data(); 
@@ -125,6 +121,7 @@ app.get('/historial', async(req, res) => {
             }); 
         }); 
         
+        historial.sort((a, b) => a.timestamp - b.timestamp);
         res.json(historial); 
     } catch (error) { 
         console.error("Error crítico en el servidor:", error);
