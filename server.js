@@ -5,6 +5,13 @@ const { initializeApp, cert } = require('firebase-admin/app');
 const { getFirestore, FieldValue } = require('firebase-admin/firestore');
 const path = require('path'); 
 
+process.on('uncaughtException', (err) => {
+  console.error('💥 ERROR NO CAPTURADO:', err);
+});
+process.on('unhandledRejection', (err) => {
+  console.error('💥 PROMESA RECHAZADA NO MANEJADA:', err);
+});
+
 const app = express(); 
 const server = http.createServer(app); 
 
@@ -15,6 +22,8 @@ const io = new Server(server, {
         methods: ["GET", "POST"]
     }
 }); 
+
+console.log("✅ Socket.IO inicializado correctamente");
 
 let serviceAccount;
 try {
@@ -142,6 +151,8 @@ app.get('/historial', async(req, res) => {
     }
 });
 
+
+console.log("📡 Rutas de socket.io deberían estar activas en /socket.io/");
 
 const PORT = process.env.PORT || 3000; 
 server.listen(PORT, () => { 
