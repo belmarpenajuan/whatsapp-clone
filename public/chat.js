@@ -1,5 +1,5 @@
 const socket = io(); 
-fetch("/historial");
+fetch('/historial?canal=' + canalActual)
 
 const form = document.getElementById("form-container"); 
 const input = document.getElementById("input-mensaje"); 
