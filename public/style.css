@@ -3,7 +3,7 @@
    ========================================================================== */
 :root {
     --bg-body: #dadbd4;
-    --bg-auth: #00a884;
+    --bg-auth: #202c33;
     --bg-container: #f0f2f5;
     --bg-sidebar: #ffffff;
     --bg-header: #f0f2f5;
@@ -15,7 +15,7 @@
     --msg-incoming: #ffffff;
     --msg-outgoing: #d9fdd3;
     --msg-shadow: rgba(11,20,26,.13);
-    --color-accent: #00a884; /* Verde corporativo en Modo Claro */
+    --color-accent: #202c33; /* Verde corporativo en Modo Claro */
 }
 
 /* Variables para Modo Oscuro - ¡Personalizado en Dorado! 🌟 */
@@ -102,7 +102,7 @@ body {
 .input-group label {
     display: block;
     font-size: 13px;
-    color: #00a884;
+    color: #202c33;
     font-weight: 600;
     margin-bottom: 6px;
 }
@@ -142,7 +142,7 @@ body {
 }
 
 #btn-login:hover {
-    background-color: #008f72;
+    background-color: #202c33;
 }
 
 #btn-toggle-registro {
