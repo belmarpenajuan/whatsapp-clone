@@ -238,31 +238,40 @@ function entrarAlChat() {
 
 conversacionesWhatsApp.forEach(item => {
     item.addEventListener('click', () => {
-        const canalSeleccionado = item.getAttribute('data-canal');
-        if (canalSeleccionado === canalActual) return; 
-
-        document.querySelector('.chat-item.activo').classList.remove('activo');
-        item.classList.add('activo');
-
-        canalActual = canalSeleccionado;
-        
-        if (txtCanalActual) {
-            if(canalActual === 'general') txtCanalActual.textContent = "Grupo General";
-            if(canalActual === 'archivos') txtCanalActual.textContent = "Repositorio Archivos";
-            if(canalActual === '.') txtCanalActual.textContent = "Sala de Pruebas (.)";
+        try {
+            const canalSeleccionado = item.getAttribute('data-canal');
+            if (canalSeleccionado === canalActual) return;
+ 
+            const itemActivo = document.querySelector('.chat-item.activo');
+            if (itemActivo) itemActivo.classList.remove('activo');
+            item.classList.add('activo');
+ 
+            canalActual = canalSeleccionado;
+ 
+            if (txtCanalActual) {
+                if (canalActual === 'general') txtCanalActual.textContent = "Grupo General";
+                if (canalActual === 'archivos') txtCanalActual.textContent = "Repositorio Archivos";
+                if (canalActual === '.') txtCanalActual.textContent = "Sala de Pruebas (.)";
+            }
+ 
+            const headerIcon = document.getElementById("header-group-icon");
+            if (headerIcon) {
+                if (canalActual === 'general') headerIcon.textContent = "👥";
+                if (canalActual === 'archivos') headerIcon.textContent = "📁";
+                if (canalActual === '.') headerIcon.textContent = "💬";
+            }
+ 
+            
+            if (inputBusqueda) inputBusqueda.value = '';
+ 
+            socket.emit('cambiar_canal', canalActual);
+            cargarHistorial();
+        } catch (error) {
+            console.error("Error al cambiar de canal:", error);
         }
-        
-        const headerIcon = document.getElementById("header-group-icon");
-        if(headerIcon) {
-            if(canalActual === 'general') headerIcon.textContent = "👥";
-            if(canalActual === 'archivos') headerIcon.textContent = "📁";
-            if(canalActual === '.') headerIcon.textContent = "💬";
-        }
-
-        socket.emit('cambiar_canal', canalActual);
-        cargarHistorial();
     });
 });
+
 
 // FUNCION CERRAR SESIÓN 
 const btnLogout = document.getElementById('btn-logout'); 

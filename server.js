@@ -10,7 +10,13 @@ const server = http.createServer(app);
 const io = new Server(server); 
 
 // Inicializar Firebase 
-const serviceAccount = require("./whatsapp-2-53dcf-firebase-adminsdk-fbsvc-2bdce6096d.json");
+let serviceAccount;
+
+if (process.env.FIREBASE_SERVICE_ACCOUNT) { 
+    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+} else { 
+    serviceAccount = require("./serviceAccountkey.json");
+}
 
 initializeApp({
     credential: cert(serviceAccount)
@@ -79,6 +85,7 @@ io.on('connection', (socket) => {
 
    socket.on('cambiar_canal', (nuevoCanal) => {
     console.log(`Usuario ${socket.username || socket.id} se cambió al chat: ${nuevoCanal}`);
+    
     socket.leave(socket.currentRoom); 
     socket.join(nuevoCanal); 
     socket.currentRoom = nuevoCanal;  
